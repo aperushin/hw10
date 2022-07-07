@@ -47,7 +47,7 @@ def get_by_skill(skill):
     data = load_candidates(CANDIDATES_JSON)
     result = ['<pre>']
     for candidate in data:
-        if skill in candidate['skills'].lower():
+        if skill in candidate['skills'].lower().split(', '):
             candidate_info = CANDIDATE_TEMPLATE.format(
                 name=candidate['name'],
                 position=candidate['position'],
