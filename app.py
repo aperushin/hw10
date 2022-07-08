@@ -1,42 +1,35 @@
-from flask import Flask
-from utils import load_candidates
-from constants import CANDIDATES_JSON
-
+from flask import Flask, abort
+from utils import format_pre_tag, get_all, get_by_pk, get_by_skill
 app = Flask(__name__)
 
 
 @app.route('/')
-def get_all():
-    candidates = load_candidates(CANDIDATES_JSON)
-    result = ['<pre>']
-    [result.append(candidate.get_info()) for candidate in candidates]
-    result.append('</pre>')
-    return '\n'.join(result)
+def page_home():
+    """Display all candidates"""
+    result = '\n'.join(get_all())
+    return format_pre_tag(result)
 
 
-@app.route('/candidates/<int:pk>')
-def get_by_pk(pk):
-    candidates = load_candidates(CANDIDATES_JSON)
-    for candidate in candidates:
-        if candidate.pk == pk:
-            return (
-                f'<img src="{candidate.picture}">'
-                f'<pre>{candidate.get_info()}</pre>'
-            )
-    return f'Кандидата с номером {pk} не существует'
+@app.route('/candidates/<int:uid>')
+def page_candidate(uid):
+    """Display candidate with given id"""
+    candidate = get_by_pk(uid)
+    if candidate:
+        return (
+            f'<img src="{candidate.picture}">\n' +
+            format_pre_tag(candidate.get_info())
+        )
+    return abort(404)
 
 
 @app.route('/skills/<skill>')
-def get_by_skill(skill):
-    candidates = load_candidates(CANDIDATES_JSON)
-    result = ['<pre>']
-
-    for candidate in candidates:
-        if skill in candidate.skills:
-            result.append(candidate.get_info())
-
-    result.append('</pre>')
-    return '\n'.join(result)
+def page_skill(skill):
+    """Display all candidates with given skill"""
+    candidates = get_by_skill(skill)
+    if candidates:
+        result = '\n'.join(candidates)
+        return format_pre_tag(result)
+    return abort(404)
 
 
 if __name__ == '__main__':
