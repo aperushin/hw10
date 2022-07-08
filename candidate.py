@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import List
 from constants import CANDIDATE_TEMPLATE
 
 
@@ -12,7 +11,7 @@ class Candidate:
     position: str
     gender: str
     age: int
-    skills: str | List[str]
+    skills: str | list[str]
 
     def __post_init__(self):
         if isinstance(self.skills, str):
