@@ -18,7 +18,7 @@ def load_candidates(filename: str) -> list[Candidate]:
 
 
 def get_all() -> list[Candidate]:
-    candidates: list[Candidate] = load_candidates(CANDIDATES_JSON)
+    candidates = load_candidates(CANDIDATES_JSON)
     return candidates
 
 
@@ -31,6 +31,6 @@ def get_by_pk(pk) -> Candidate | None:
 
 
 def get_by_skill(skill) -> list[Candidate]:
-    candidates: list[Candidate] = load_candidates(CANDIDATES_JSON)
+    candidates = load_candidates(CANDIDATES_JSON)
     result = [c for c in candidates if skill.lower() in c.skills_list]
     return result
