@@ -9,10 +9,6 @@ def load_json(filename: str) -> list[dict]:
     return data
 
 
-def format_pre_tag(string):
-    return f'<pre>{string}</pre>'
-
-
 def load_candidates(filename: str) -> list[Candidate]:
     data = load_json(filename)
     result = list()
@@ -21,9 +17,9 @@ def load_candidates(filename: str) -> list[Candidate]:
     return result
 
 
-def get_all() -> list[str]:
+def get_all() -> list[Candidate]:
     candidates: list[Candidate] = load_candidates(CANDIDATES_JSON)
-    return [candidate.get_info() for candidate in candidates]
+    return candidates
 
 
 def get_by_pk(pk) -> Candidate | None:
@@ -34,7 +30,7 @@ def get_by_pk(pk) -> Candidate | None:
     return None
 
 
-def get_by_skill(skill) -> list[str]:
+def get_by_skill(skill) -> list[Candidate]:
     candidates: list[Candidate] = load_candidates(CANDIDATES_JSON)
-    result = [c.get_info() for c in candidates if skill in c.skills]
+    result = [c for c in candidates if skill.lower() in c.skills_list]
     return result
