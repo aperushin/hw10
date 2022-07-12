@@ -16,7 +16,7 @@ def page_candidate(uid):
     """Display candidate with given id"""
     candidate = get_by_pk(uid)
     if candidate:
-        return render_template('search_result.html', candidate=candidate)
+        return render_template('candidate_page.html', candidate=candidate)
     return abort(404)
 
 
