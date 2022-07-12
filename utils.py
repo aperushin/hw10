@@ -2,6 +2,7 @@ import json
 from candidate import Candidate
 from constants import CANDIDATES_JSON
 
+
 def load_json(filename: str) -> list[dict]:
     with open(filename, encoding='utf8') as f:
         data = json.load(f)

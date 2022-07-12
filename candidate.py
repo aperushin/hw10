@@ -14,6 +14,7 @@ class Candidate:
     skills: str | list[str]
 
     def __post_init__(self):
+        """Make self.skills a list of lower-case strings"""
         if isinstance(self.skills, str):
             self.skills = self.skills.lower().split(', ')
         elif isinstance(self.skills, list):
